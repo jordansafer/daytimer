@@ -1,0 +1,25 @@
+{
+  "name": "timer",
+  "version": "1.0.0",
+  "description": "timing tasks",
+  "main": "index.ts",
+  "scripts": {
+    "compile": "tsc index.ts",
+    "launch": "node index.js",
+    "start": "npm run compile && npm run launch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordansafer/daytimer.git"
+  },
+  "author": "jordansafer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordansafer/daytimer/issues"
+  },
+  "homepage": "https://github.com/jordansafer/daytimer#readme",
+  "dependencies": {
+    "typescript": "^4.1.5"
+  }
+}
