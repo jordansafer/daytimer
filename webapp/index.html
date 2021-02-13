@@ -58,18 +58,18 @@
     <div class="flex-column">
         <!-- First row, input time for each side. Start button -->
         <div>
-            <form class="form-inline" action="jsfunction()">
+            <form class="form-inline" action="/submit" method="POST">
                 <div class="flex-row">
                     <div class="form-group">
                         <label for="workTime">Work Time: </label>
-                        <input type="time" id="workTime" class="form-control">
+                        <input type="time" name="workTime" class="form-control">
                       </div>
                     <div class="form-group">
                         <label for="otherTime">Other Time: </label>
-                        <input type="time" id="otherTime" class="form-control">
+                        <input type="time" name="otherTime" class="form-control">
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" value="Submit" class="btn btn-default">Submit</button>
                     </div>
                 </div>
                
