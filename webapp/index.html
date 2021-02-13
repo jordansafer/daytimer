@@ -17,13 +17,15 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <style>
         .flex-row {
           display: flex;
           background-color: Blue;
         }
         
-        .flex-row > div {
+        .flex-row > .form-group {
           border: 5px solid red;
           margin: 10px;
           padding: 20px;
@@ -43,14 +45,13 @@
 
         div {
             flex: 2;
-            background: gold;
             overflow: auto;
-            border: 5px solid black;
-            margin: 10px;
         }
 
-        .timeButton {
+        .time-button {
             font-size: 4em;
+            flex: 2;
+            overflow: auto;
         }
         </style>
 </head>
@@ -61,12 +62,12 @@
             <form class="form-inline" action="/submit" method="POST">
                 <div class="flex-row">
                     <div class="form-group">
-                        <label for="workTime">Work Time: </label>
-                        <input type="time" name="workTime" class="form-control">
+                        <label for="work_time">Work Time: </label>
+                        <input type="time" name="work_time" class="form-control">
                       </div>
                     <div class="form-group">
-                        <label for="otherTime">Other Time: </label>
-                        <input type="time" name="otherTime" class="form-control">
+                        <label for="other_time">Other Time: </label>
+                        <input type="time" name="other_time" class="form-control">
                     </div>
                     <div>
                         <button type="submit" value="Submit" class="btn btn-default">Submit</button>
@@ -78,13 +79,15 @@
 
         <!-- Second row. 2 buttons, clock on each, only 1 is counting down based on turn. Write time to file. Freeze at 0. -->
         <div class="flex-row" style="flex: 1;">
-            <div class="timeButton" id="workTimeButton" >
-                Time 1
-            </div>
-            <div class="timeButton" id="otherTimeButton">
-                Time 2
-            </div>
+            <div class="time-button" id="work_button_container"></div>
+            <div class="time-button" id="play_button_container"></div>
         </div>
        
     </div>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel" src="work_button.js"></script>
 </body>

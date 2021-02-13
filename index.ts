@@ -6,15 +6,20 @@ const port = 3000
 app.use(express.urlencoded({
     extended: true
 }))
+express.static('webapp')
 app.use('/', express.static('webapp'))
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
+// handle frontend updating countdown times
 app.post('/submit', function (req, res) {
     console.log(req.body)
+
+    // 1. start a countdown, set values for both clocks
+    // 2. send clocks times to frontend
+
     res.send('Got a POST request')
 })
+
+// handle frontend changing 
 
 
 app.listen(port, () => {
