@@ -7,8 +7,8 @@ class TimeButton extends React.Component {
   render() {
     const color = this.state.active ? 'lightgreen' : 'pink'
 
-    const seconds = time % 60
-    const minutesRemaining = time / 60
+    const seconds = this.state.time % 60
+    const minutesRemaining = this.state.time / 60
     const minutes = minutesRemaining % 60
     const hours = minutesRemaining / 24
 
@@ -36,7 +36,7 @@ class TimeButton extends React.Component {
               })
             })
             .then((response) => {
-              console.log(response) // TODO update with backend value
+              console.log(response.json()) // TODO update with backend value
             })
               
             // 2. Update on frontend
@@ -61,10 +61,10 @@ class TimeButton extends React.Component {
     })
   }
 
-  backendSync() {
-    fetch('/clock')
+  syncBackend() {
+    fetch('/clock&name=' + this.prop.name)
     .then((response) => {
-      console.log(response) // TODO update state here
+      console.log(response.json()) // TODO update state here
     })
   }
 
@@ -75,7 +75,7 @@ class TimeButton extends React.Component {
     )
     this.backendSync = setInterval(
       () => this.syncBackend(),
-      60 * 1000
+      5 * 1000 // TODO make 60
     )
   }
 

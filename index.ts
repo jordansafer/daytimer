@@ -1,3 +1,4 @@
+import { response } from 'express';
 import express = require('express');
 
 const app = express()
@@ -70,6 +71,10 @@ class ClockManager {
     this.work_clock.reset(work_time)
     this.play_clock.reset(play_time)
   }
+
+  get_status(name:string):Clock {
+    return name == 'work' ? this.work_clock : this.play_clock
+  }
 }
 
 function convertDateToTime(date:string):number {
@@ -96,16 +101,18 @@ app.post('/submit', function (req, res) {
     clocks.reset(convertDateToTime(req.body.work_time), convertDateToTime(req.body.other_time))
     
     // 2. send clocks times to frontend TODO
+    res.sendFile(__dirname + '/webapp/index.html')
 })
 
 app.post('/clock', function (req, res) {
   clocks.switch(req.body.name)
 
-  console.log(req.body)
+  res.json({"hithere": "test"})
 })
 
-// handle frontend changing 
-
+app.get('/clock', function (req, res) {
+  res.json(clocks.get_status(req.body.name))
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
