@@ -58,7 +58,7 @@
 <body>
     <div class="flex-column">
         <!-- First row, input time for each side. Start button -->
-        <div>
+        <div style="flex: 1;">
             <form class="form-inline" action="/submit" method="POST">
                 <div class="flex-row">
                     <div class="form-group">
@@ -73,19 +73,17 @@
                         <button type="submit" value="Submit" class="btn btn-default">Submit</button>
                     </div>
                 </div>
-               
               </form>
         </div>
 
         <!-- Second row. 2 buttons, clock on each, only 1 is counting down based on turn. Write time to file. Freeze at 0. -->
-        <div style="flex: 1;" id="timing_container">
+        <div style="flex: 3; display: flex;" id="timing_container">
         </div>
-       
     </div>
 
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 
     <!-- Load our React component. -->
-    <script type="text/babel" src="work_button.js"></script>
+    <script type="text/babel" src="time_button.js"></script>
 </body>
