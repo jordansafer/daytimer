@@ -10,7 +10,14 @@ class TimeButton extends React.Component {
     const color = this.state.active ? 'lightgreen' : 'pink'
 
     return (
-      <div style={{ backgroundColor: color }} 
+      <div style={{ 
+        backgroundColor: color,
+        margin: '10px',
+        fontSize: '7em',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+       }} 
            onClick={() => {
             // 1. Post update to backend
             console.log(this.props.name)
