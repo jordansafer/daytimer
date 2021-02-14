@@ -1,13 +1,16 @@
-const e = React.createElement
-
 class TimeButton extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { active: false, hours: 0, minutes: 0, seconds: 0 }
+    this.state = { active: false, time: 0 }
   }
 
   render() {
     const color = this.state.active ? 'lightgreen' : 'pink'
+
+    const seconds = time % 60
+    const minutesRemaining = time / 60
+    const minutes = minutesRemaining % 60
+    const hours = minutesRemaining / 24
 
     return (
       <div style={{ 
@@ -22,7 +25,7 @@ class TimeButton extends React.Component {
             // 1. Post update to backend
             console.log(this.props.name)
 
-            let response = fetch('/clock', {
+            fetch('/clock', {
               method: 'post',
               headers: {
                 'Accept': 'application/json',
@@ -33,20 +36,52 @@ class TimeButton extends React.Component {
               })
             })
             .then((response) => {
-              //console.log(response)
+              console.log(response) // TODO update with backend value
             })
               
             // 2. Update on frontend
             this.setState((state) => ({ 
               active: !state.active, 
-              hours: state.hours, 
-              minutes: state.minutes, 
-              seconds: state.seconds 
+              time: state.time
             }));
           }}>
-         {this.state.hours}:{this.state.minutes}:{this.state.seconds}
+         {hours}:{minutes}:{seconds}
       </div>
     )
+  }
+
+  tick() {
+    this.setState((state) => {
+      const active = state.active && state.time > 0
+      const time = active ? state.time - 1 : state.time
+      return {
+        active: active,
+        time: time
+      }
+    })
+  }
+
+  backendSync() {
+    fetch('/clock')
+    .then((response) => {
+      console.log(response) // TODO update state here
+    })
+  }
+
+  componentDidMount() {
+    this.timerUpdate = setInterval(
+      () => this.tick(),
+      1000
+    )
+    this.backendSync = setInterval(
+      () => this.syncBackend(),
+      60 * 1000
+    )
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerUpdate)
+    clearInterval(this.backendSync)
   }
 }
 
