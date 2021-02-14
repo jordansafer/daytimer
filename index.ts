@@ -6,7 +6,8 @@ const port = 3000
 app.use(express.urlencoded({
     extended: true
 }))
-express.static('webapp')
+app.use(express.json())
+
 app.use('/', express.static('webapp'))
 
 // handle frontend updating countdown times
@@ -19,9 +20,18 @@ app.post('/submit', function (req, res) {
     res.send('Got a POST request')
 })
 
+app.post('/clock', function (req, res) {
+  console.log(req.body)
+
+  res.send("hi")
+})
+
 // handle frontend changing 
 
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+const work_clock = 0
+const play_clock = 0
