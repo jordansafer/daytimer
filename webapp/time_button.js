@@ -7,10 +7,10 @@ class TimeButton extends React.Component {
   render() {
     const color = this.state.active ? 'lightgreen' : 'pink'
 
-    const seconds = this.state.time % 60
-    const minutesRemaining = this.state.time / 60
-    const minutes = minutesRemaining % 60
-    const hours = minutesRemaining / 24
+    const seconds = String(this.state.time % 60).padStart(2, "0")
+    const minutesRemaining = Math.floor(this.state.time / 60)
+    const minutes = String(minutesRemaining % 60).padStart(2, "0")
+    const hours = String(Math.floor(minutesRemaining / 60)).padStart(2, "0")
 
     return (
       <div style={{ 
@@ -23,8 +23,6 @@ class TimeButton extends React.Component {
        }} 
            onClick={() => {
             // 1. Post update to backend
-            console.log(this.props.name)
-
             fetch('/clock', {
               method: 'post',
               headers: {
@@ -35,8 +33,17 @@ class TimeButton extends React.Component {
                 name: this.props.name
               })
             })
-            .then((response) => {
-              console.log(response.json()) // TODO update with backend value
+            .then((response) => response.json())
+            .then((backendStateString) => {
+              const backendState = JSON.parse(backendStateString)
+              // Ignore responses for the other clock
+              if (this.backendState.name != this.props.name) {
+                return
+              }
+              this.setState((state) => ({
+                active: Boolean(backendState.running),
+                time: Number(backendState.time)
+              }))
             })
               
             // 2. Update on frontend
@@ -53,7 +60,9 @@ class TimeButton extends React.Component {
   tick() {
     this.setState((state) => {
       const active = state.active && state.time > 0
+      console.log('tick' + state.time)
       const time = active ? state.time - 1 : state.time
+      console.log(time)
       return {
         active: active,
         time: time
@@ -62,9 +71,18 @@ class TimeButton extends React.Component {
   }
 
   syncBackend() {
-    fetch('/clock&name=' + this.prop.name)
-    .then((response) => {
-      console.log(response.json()) // TODO update state here
+    fetch('/clock?name=' + this.props.name)
+    .then((response) => response.json())
+    .then((backendStateString) => {
+      const backendState = JSON.parse(backendStateString)
+      // Ignore responses for the other clock
+      if (this.backendState.name != this.props.name) {
+        return
+      }
+      this.setState((state) => ({
+        active: Boolean(backendState.running),
+        time: Number(backendState.time)
+      }))
     })
   }
 

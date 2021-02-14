@@ -73,7 +73,7 @@ class ClockManager {
   }
 
   get_status(name:string):Clock {
-    return name == 'work' ? this.work_clock : this.play_clock
+    return  name == 'work' ? this.work_clock : this.play_clock
   }
 }
 
@@ -107,11 +107,13 @@ app.post('/submit', function (req, res) {
 app.post('/clock', function (req, res) {
   clocks.switch(req.body.name)
 
-  res.json({"hithere": "test"})
+  const status = clocks.get_status(req.body.name)
+  res.json(JSON.stringify(status))
 })
 
 app.get('/clock', function (req, res) {
-  res.json(clocks.get_status(req.body.name))
+  const status = clocks.get_status(req.body.name)
+  res.json(JSON.stringify(status))
 })
 
 app.listen(port, () => {
