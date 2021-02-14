@@ -112,7 +112,7 @@ app.post('/clock', function (req, res) {
 })
 
 app.get('/clock', function (req, res) {
-  const status = clocks.get_status(req.body.name)
+  const status = clocks.get_status(String(req.query.name))
   res.json(JSON.stringify(status))
 })
 

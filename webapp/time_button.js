@@ -36,10 +36,6 @@ class TimeButton extends React.Component {
             .then((response) => response.json())
             .then((backendStateString) => {
               const backendState = JSON.parse(backendStateString)
-              // Ignore responses for the other clock
-              if (this.backendState.name != this.props.name) {
-                return
-              }
               this.setState((state) => ({
                 active: Boolean(backendState.running),
                 time: Number(backendState.time)
@@ -60,9 +56,7 @@ class TimeButton extends React.Component {
   tick() {
     this.setState((state) => {
       const active = state.active && state.time > 0
-      console.log('tick' + state.time)
       const time = active ? state.time - 1 : state.time
-      console.log(time)
       return {
         active: active,
         time: time
@@ -75,10 +69,6 @@ class TimeButton extends React.Component {
     .then((response) => response.json())
     .then((backendStateString) => {
       const backendState = JSON.parse(backendStateString)
-      // Ignore responses for the other clock
-      if (this.backendState.name != this.props.name) {
-        return
-      }
       this.setState((state) => ({
         active: Boolean(backendState.running),
         time: Number(backendState.time)
@@ -93,7 +83,7 @@ class TimeButton extends React.Component {
     )
     this.backendSync = setInterval(
       () => this.syncBackend(),
-      5 * 1000 // TODO make 60
+      Math.floor(5 * 1000)
     )
   }
 
