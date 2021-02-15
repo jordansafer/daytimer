@@ -31,12 +31,12 @@ class Clock {
   }
 
   update():void {
+    if (this.time == 0) {
+      this.running = false
+    }
     if (this.running) {
       this.time = this.time - 1
       console.log(`${this.name}: ${this.time}`)
-    }
-    if (this.time == 0) {
-      this.running = false
     }
   }
 }
@@ -101,7 +101,7 @@ app.post('/submit', function (req, res) {
     clocks.reset(convertDateToTime(req.body.work_time), convertDateToTime(req.body.other_time))
     
     // 2. send clocks times to frontend TODO
-    res.sendFile(__dirname + '/webapp/index.html')
+    res.redirect("/")
 })
 
 app.post('/clock', function (req, res) {

@@ -77,6 +77,9 @@ class TimeButton extends React.Component {
   }
 
   componentDidMount() {
+    // Sync backend on initial load
+    this.syncBackend()
+
     this.timerUpdate = setInterval(
       () => this.tick(),
       1000
